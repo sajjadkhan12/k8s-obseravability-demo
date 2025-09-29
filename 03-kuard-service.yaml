@@ -1,13 +1,15 @@
-# 03-kuard-service.yaml
 apiVersion: v1
 kind: Service
 metadata:
   name: kuard-service
+  labels:  
+    app: kuard
 spec:
-  type: NodePort  # This exposes the service on a port on each node. Useful for testing.
+  type: NodePort
   selector:
     app: kuard
   ports:
-  - port: 80        # Port the service listens on internally
-    targetPort: 8080 # Port the pod is listening on
-    nodePort: 30007  # Port on the node (choose between 30000-32767)
+  - name: http-metrics
+    port: 80
+    targetPort: 8080
+    nodePort: 30007

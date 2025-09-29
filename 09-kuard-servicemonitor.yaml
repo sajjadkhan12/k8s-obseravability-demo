@@ -1,0 +1,16 @@
+# 09-kuard-servicemonitor.yaml (corrected)
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: kuard-monitor
+  namespace: observability-demo
+  labels:
+    release: monitoring
+spec:
+  selector:
+    matchLabels:
+      app: kuard
+  endpoints:
+  - port: http-metrics  # Use the port NAME, not number
+    path: /metrics
+    interval: 30s

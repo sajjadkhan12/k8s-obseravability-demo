@@ -1,0 +1,34 @@
+# 08-monitoring-values.yaml
+# Custom values for the kube-prometheus-stack
+
+# Give Grafana a NodePort so we can access it easily
+grafana:
+  service:
+    type: NodePort
+    nodePort: 30008
+  adminPassword: "admin123"  # Default password for Grafana
+
+# Configure Prometheus storage
+prometheus:
+  prometheusSpec:
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 5Gi
+
+# Reduce resource requests for our small cluster
+alertmanager:
+  alertmanagerSpec:
+    resources:
+      requests:
+        memory: 100Mi
+        cpu: 100m
+
+prometheusOperator:
+  resources:
+    requests:
+      memory: 100Mi
+      cpu: 100m
